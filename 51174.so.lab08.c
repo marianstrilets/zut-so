@@ -1,3 +1,7 @@
+// SO IS1 214b LAB08
+// Marian Strilets
+// sm51174@zut.edu.pl
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>

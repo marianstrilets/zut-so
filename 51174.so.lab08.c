@@ -2,6 +2,7 @@
 // Marian Strilets
 // sm51174@zut.edu.pl
 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>

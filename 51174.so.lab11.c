@@ -27,7 +27,7 @@ double wallisa(int start, int end ){
         result *= ((double) (2*i)) / ((double) (2*i - 1));
         result *= ((double) (2*i)) / ((double) (2*i + 1));
     }
-    result*=2;
+    //result*=2;
     return result;
 }
 
@@ -45,9 +45,18 @@ DWORD WINAPI program2pthread(LPVOID args) {
 
     printf("Thread #%lx size=%d first=%d\n", GetCurrentThreadId(), end_index - start_index, start_index);
 
-    function_mutex(global_product);
+    //function_mutex(global_product);
 
-    global_product =  wallisa(start_index, end_index);
+
+    double threadproduct = 0;
+
+    WaitForSingleObject(mutex, INFINITE);
+
+    threadproduct =  wallisa(start_index, end_index);
+
+    global_product *= threadproduct;
+    ReleaseMutex(mutex);
+
     
     printf("Thread #%lx prod=%.20f\n", GetCurrentThreadId(), global_product); 
 }
@@ -103,7 +112,7 @@ int main(int argc, char** argv) {
 
     clock_gettime(CLOCK_REALTIME, &stop);
     double time_product = (stop.tv_sec - start.tv_sec) + (double)(stop.tv_nsec - start.tv_nsec) / (double)1000000000L;
-    printf("w/Thread: PI=%.20f time=%lf\n", global_product, time_product);
+    printf("w/Thread: PI=%.20f time=%lf\n", global_product*2, time_product);
 
     //-------------------------------------------------- wo/Threads -------------------------------------------
     clock_gettime(CLOCK_REALTIME, &start);
@@ -111,7 +120,7 @@ int main(int argc, char** argv) {
 
     clock_gettime(CLOCK_REALTIME, &stop);
     time_product = (stop.tv_sec - start.tv_sec) + (double)(stop.tv_nsec - start.tv_nsec) / (double)1000000000L;
-    printf("wo/Thread: PI=%.20f time=%lf\n", global_product, time_product);
+    printf("wo/Thread: PI=%.20f time=%lf\n", global_product*2, time_product);
 
     return 0;
 }

@@ -1,4 +1,4 @@
-### Systemy operacyjne 2/3
+# Systemy operacyjne 2/3
 
 #### 07 - Programowanie skryptów powłoki
 
